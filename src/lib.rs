@@ -49,6 +49,14 @@ impl PjsExtension {
         })
     }
 
+    #[wasm_bindgen(js_name = account)]
+    pub fn current_account(&self) -> Result<Account, Error> {
+        let account = self.accounts
+            .get(self.selected.ok_or(Error::NoAccountSelected)? as usize)
+            .ok_or(Error::NoAccounts)?;
+        Ok(account.clone())
+    }
+
     #[wasm_bindgen(js_name = selectAccount)]
     pub fn select_account(&mut self, idx: u8) {
         self.selected = self
